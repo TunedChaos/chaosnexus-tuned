@@ -1,0 +1,33 @@
+training:
+  # Iter-8: continue from iter-6 toward ≥0.90; mild focus 12/1/2/7/8
+  dataset_path: datasets/iter8/train.jsonl
+  max_seq_length: 4096
+  num_epochs: 1.5
+  learning_rate: 0.0001
+  batch_size: 2
+  gradient_accumulation_steps: 8
+  warmup_steps: 10
+  max_steps: 0
+  save_steps: 30
+  eval_steps: 0.1
+  weight_decay: 0.001
+  random_seed: 3407
+  packing: false
+  train_on_completions: true
+  gradient_checkpointing: unsloth
+  optim: adamw_torch
+  lr_scheduler_type: cosine
+lora:
+  lora_r: 32
+  lora_alpha: 64
+  lora_dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+  use_rslora: false
+  use_loftq: false

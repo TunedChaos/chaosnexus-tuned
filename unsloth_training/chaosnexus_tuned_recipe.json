@@ -1,0 +1,171 @@
+{
+  "recipe": {
+    "model_providers": [
+      {
+        "name": "google_provider",
+        "endpoint": "https://generativelanguage.googleapis.com/v1beta/openai/",
+        "provider_type": "openai",
+        "api_key_env": "GEMINI_API_KEY",
+        "extra_headers": {},
+        "extra_body": {}
+      }
+    ],
+    "mcp_providers": [],
+    "model_configs": [
+      {
+        "alias": "gemini_pro",
+        "model": "gemini-3.1-pro-preview",
+        "provider": "google_provider",
+        "inference_parameters": {
+          "temperature": 0.5,
+          "max_tokens": 8192
+        }
+      }
+    ],
+    "tool_configs": [],
+    "columns": [
+      {
+        "column_type": "sampler",
+        "name": "topic",
+        "drop": true,
+        "sampler_type": "category",
+        "params": {
+          "values": [
+            "Local Network HTTP Requests",
+            "Deep SQLite Migrations",
+            "Parsing Massive TOML/JSON logs",
+            "Using Rhai BigInt math algorithms",
+            "Complex data structures and matrices"
+          ]
+        }
+      },
+      {
+        "column_type": "llm-text",
+        "name": "scenario",
+        "drop": false,
+        "model_alias": "gemini_pro",
+        "prompt": "You are an expert systems architect designing testing scenarios for an industrial automation AI.\nWrite one highly specific, complex user request where an AI agent must write a Rhai script to solve a problem using the ChaosNexus Anvil MCP system, focusing on: {{ topic }}\n\nRule:\n- 1-3 sentences.\n- Make it a realistic user prompt.\n- Output ONLY the prompt text.",
+        "system_prompt": "You write realistic, complex user goals for industrial automation testing.",
+        "with_trace": "none",
+        "extract_reasoning_content": false
+      },
+      {
+        "column_type": "llm-structured",
+        "name": "golden_response",
+        "drop": false,
+        "model_alias": "gemini_pro",
+        "prompt": "You are generating synthetic training data for a smaller 8B parameter model called \"ChaosNexus Tuned\".\nBased on the user scenario below, generate the \"Golden\" tool-calling response the model should output.\n\nUser Scenario:\n{{ scenario }}\n\nCRITICAL RULES:\n1. NARRATIVE COMMENTING: The Rhai script MUST include extremely thorough, non-technical friendly narrative-style comments.\n2. DOCUMENTATION AUTONOMY: The agent must autonomously attempt to find local documentation first. If it fails, it must drill down to find and dynamically add docs to ChaosNexus Codex before writing code.\n3. TOML SECURITY: Specify any required TOML permissions.",
+        "with_trace": "none",
+        "extract_reasoning_content": false,
+        "output_format": {
+          "type": "object",
+          "properties": {
+            "docs_search": {
+              "type": "string",
+              "description": "The local query to search docs with, or the URL to drill down into."
+            },
+            "plugin_name": {
+              "type": "string",
+              "description": "A short snake_case name for the plugin"
+            },
+            "script": {
+              "type": "string",
+              "description": "The full Rhai script containing narrative comments."
+            },
+            "toml": {
+              "type": "string",
+              "description": "The TOML permissions file contents, or empty string if null."
+            }
+          },
+          "required": [
+            "docs_search",
+            "plugin_name",
+            "script",
+            "toml"
+          ],
+          "additionalProperties": false
+        }
+      }
+    ],
+    "processors": []
+  },
+  "run": {
+    "rows": 5,
+    "preview": true,
+    "output_formats": [
+      "jsonl"
+    ]
+  },
+  "ui": {
+    "nodes": [
+      {
+        "id": "google_provider",
+        "x": 720,
+        "y": -455,
+        "width": 400
+      },
+      {
+        "id": "gemini_pro",
+        "x": 720,
+        "y": -261,
+        "width": 400
+      },
+      {
+        "id": "topic",
+        "x": 0,
+        "y": 66.5,
+        "width": 400
+      },
+      {
+        "id": "scenario",
+        "x": 480,
+        "y": 0,
+        "width": 400
+      },
+      {
+        "id": "golden_response",
+        "x": 960,
+        "y": 66.5,
+        "width": 400
+      }
+    ],
+    "edges": [
+      {
+        "from": "topic",
+        "to": "scenario",
+        "type": "canvas",
+        "source_handle": "data-out",
+        "target_handle": "data-in"
+      },
+      {
+        "from": "scenario",
+        "to": "golden_response",
+        "type": "canvas",
+        "source_handle": "data-out",
+        "target_handle": "data-in"
+      },
+      {
+        "from": "google_provider",
+        "to": "gemini_pro",
+        "type": "semantic",
+        "source_handle": "semantic-out-bottom",
+        "target_handle": "semantic-in-top"
+      },
+      {
+        "from": "gemini_pro",
+        "to": "scenario",
+        "type": "semantic",
+        "source_handle": "semantic-out-bottom",
+        "target_handle": "data-in-top"
+      },
+      {
+        "from": "gemini_pro",
+        "to": "golden_response",
+        "type": "semantic",
+        "source_handle": "semantic-out-bottom",
+        "target_handle": "data-in-top"
+      }
+    ],
+    "layout_direction": "LR"
+  }
+}
