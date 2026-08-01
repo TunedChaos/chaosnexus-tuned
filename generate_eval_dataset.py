@@ -128,7 +128,7 @@ def main():
     sharegpt_data = []
     alpaca_data = []
 
-    questions_path = "chaosnexus-tuned/tests/Questions.md"
+    questions_path = "chaosnexus-tuned/tests/eval/Questions.md"
     prompts = extract_prompts(questions_path)
     
     print(f"Extracted {len(prompts)} questions from {questions_path}.")

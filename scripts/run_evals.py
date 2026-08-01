@@ -15,8 +15,8 @@ except (ImportError, NotImplementedError):
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-QUESTIONS_FILE = "tests/Questions.md"
-OUTPUT_FILE = "tests/eval_results.md"
+QUESTIONS_FILE = "tests/eval/Questions.md"
+OUTPUT_FILE = "tests/eval/eval_results.md"
 MAX_SEQ_LENGTH = 4096
 
 
@@ -130,7 +130,7 @@ def main():
         "--output",
         type=str,
         default=OUTPUT_FILE,
-        help="Markdown output path relative to cwd (default tests/eval_results.md)",
+        help="Markdown output path relative to cwd (default tests/eval/eval_results.md)",
     )
     parser.add_argument(
         "--greedy",

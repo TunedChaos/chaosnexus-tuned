@@ -34,15 +34,15 @@ echo "==> Anvil smoke (1,4,5,7) on $MODEL"
 "$PYTHON" scripts/run_evals.py \
   --model "$MODEL" \
   --max_tokens 1024 --greedy --indices 1,4,5,7 \
-  --output tests/eval_results_v1_smoke.md
+  --output tests/eval/eval_results_v1_smoke.md
 
 echo "==> Anvil full 18"
 "$PYTHON" scripts/run_evals.py \
   --model "$MODEL" \
   --max_tokens 1024 --greedy \
-  --output tests/eval_results_v1.md
+  --output tests/eval/eval_results_v1.md
 
-echo "Done. Score against tests/eval_scores_v1.md (Pass=1 / Partial=0.5 / Fail=0)."
+echo "Done. Score against tests/eval/eval_scores_v1.md (Pass=1 / Partial=0.5 / Fail=0)."
 if [[ "$ANVIL_ONLY" -eq 0 ]]; then
   echo "For optional lm_eval setup, see ../launch/model/ChaosNexus_Tuned_v1/BENCHMARKS.md"
 fi
