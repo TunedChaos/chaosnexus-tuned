@@ -55,7 +55,7 @@ Heavy priority upsample (5040 near-duplicate anti-invention rows) drove low trai
 
 ### Iter-5 outline
 
-1. Shrink corpus: fewer unique goldens, milder upsample (target ~500–1000 rows, not 5k clones).
+1. Shrink corpus: fewer unique goldens, milder upsample (target ~500-1000 rows, not 5k clones).
 2. Prefer positive exemplar density over long "never invent X" lists in assistant turns.
 3. Restore prompt-4 / prompt-3 / CVar goldens that were Pass in iter-3.
 4. Keep greedy eval; compare against iter-3 checkpoint as regression baseline.
