@@ -1,6 +1,6 @@
 # chaosnexus-tuned/TRAIN_ITER7.md
 
-# Train iteration-7 plan (full-version ≥0.90) — COMPLETED / REGRESSED
+# Train iteration-7 plan (full-version ≥0.90) - COMPLETED / REGRESSED
 
 **Result:** mean **0.611**, smoke **FAIL**. See `tests/eval_scores_iter7.md`.  
 **Cause:** focus×45 + “Register …” assistant templates fixed prompt 12 but collapsed 1/5/9/13/17.  
