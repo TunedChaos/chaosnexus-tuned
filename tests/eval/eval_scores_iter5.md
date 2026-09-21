@@ -54,4 +54,4 @@
 
 1. Heavy upsample **only** prompt-4 `db_connect`/`db_query` positive + anti-`sqlite_*` pairs.
 2. Fix 6 (`regex_match` array), 8 (`cn_a_install_plugin`), 17 (`ws_connect(url, cb)`).
-3. Keep corpus small (~700–1000); do not return to iter-4 ban-list collapse.
+3. Keep corpus small (~700-1000); do not return to iter-4 ban-list collapse.
